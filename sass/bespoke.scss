@@ -1,0 +1,276 @@
+//colors
+
+//$primary: #eee;
+//$secondary: #111;
+$white:#CEC8C8;
+$black:#1a1a1a;
+
+//transitions
+$fast: 0.2s;
+$slow: 0.3s;
+$crawling: 0.5s; 
+
+//text
+$body-text-size: 1.4rem;
+$body-text-line-height: 2.2rem;
+$smoothing: antialiased;
+
+//grid
+$gutter: 2.4rem;
+
+//layers
+$bottom-layer:10;
+$middle-layer:20;
+$top-layer:30;
+$super-layer:40;
+$god-layer:50;
+
+html {
+  //set font size so 1rem = 10px
+  font-size: 62.5%;
+}
+//set box sizing mode
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Space Mono', monospace;
+  font-size:$body-text-size;
+  font-weight:normal;
+  line-height:$body-text-line-height;
+  color:$white;
+  background:$black; 
+  -webkit-font-smoothing: $smoothing;
+}
+// Clearfix mixin
+@mixin clearfix {
+  &:after {
+    display: table;
+    clear: both;
+    content: '';
+  }
+}
+
+
+//helpful classes
+@mixin vertical-align-element{
+  position: relative;
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
+}
+@mixin vertical-align-parent{
+  top:50%;
+  transform: translateY(-50%);
+  transform-style: preserve-3d;
+}
+.spacer-big{
+  width:100%;
+  height:2.4rem;
+}
+.spacer-small{
+  width:100%;
+  height:1.2rem;
+}
+.bottom-layer{
+  z-index:$bottom-layer;
+}
+.middle-layer{
+  z-index:$middle-layer;
+}
+.top-layer{
+  z-index:$top-layer;
+}
+.super-layer{
+  z-index:$super-layer;
+}
+.god-layer{
+  z-index:$god-layer;
+}
+.left{
+  float:left;
+}
+.right{
+  float:right;
+}
+.half-height{
+  height:50%;
+}
+.full-height{
+  height:100%;
+}
+.half-width{
+  width:50%;
+}
+.full-width{
+  width:100%;
+}
+.no-mobile{
+  display:none !important;
+}
+.no-padding{
+  padding:none;
+}
+.no-margin{
+  margin:none;
+}
+.bottom-right-corner, .bottom-left-corner, .top-left-corner, .top-right-corner{
+  position:absolute !important;
+}
+.bottom-right-corner{
+  bottom:0;
+  right:0;
+}
+.bottom-left-corner{
+  bottom:0;
+  left:0;
+}
+.top-left-corner{
+  top:0;
+  left:0;
+}
+.top-right-corner{
+  top:0;
+  right:0;
+}
+.padding-top-and-bottom{
+  padding-top:$gutter;
+  padding-bottom:$gutter;
+}
+.padding-box{
+  padding:$gutter;
+}
+
+//fade-in class for sequential fading
+.fade-in, .pre-load-fade-in{
+  opacity:0;
+  transition: opacity $fast;
+}
+
+//default anchors
+a:link, a:visited, a:active, a:hover{
+  text-decoration:none;
+  color:inherit;
+}
+a.button{
+  transition: background $crawling, color $crawling, border-bottom-color $crawling;
+  display:block;
+  position:relative;
+  color:$white;
+  text-align:center;
+  height:4.8rem;
+  line-height:4.8rem;
+  width:100%;
+  border-bottom:0.1rem solid $white;
+  &:hover{
+    background:$white;
+    color:$black;
+    div{
+      opacity:0;
+    }
+  }
+  div{
+    position:absolute;
+    top:-$body-text-size;
+    left:0rem;
+    transition: opacity $crawling;
+  }
+}
+p,h1, h2, h3{
+  font-weight:normal;
+  margin:0;
+  padding:0;
+}
+h1{
+  font-size:$body-text-size;
+  line-height:$body-text-line-height;
+  color:inherit;
+}
+div#splash{
+  opacity:1;
+  transition: opacity $slow;
+  width:100%;
+  height:100%;
+  background:$black;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:$bottom-layer;
+  svg{
+    //filter:blur(2rem);
+    fill:$white;
+    display:block;
+    margin:auto;
+    width:25%;
+    @include vertical-align-element();
+  }
+}
+
+div#l-body-wrapper{
+  opacity:0;
+  transition: background $crawling, color $crawling, opacity $crawling;
+  width:100%;
+  padding:$gutter;
+  background:$black;
+  position:relative;
+  z-index:$top-layer;
+  @include clearfix;
+ &.flipped{
+  color:$black;
+  a.button{
+    color:$black;
+    border-bottom-color:$black;
+    &:hover{
+      background:$black;
+      color:$white;
+    }
+  }
+ }
+}
+//blocks
+%l-ribbon{
+  display:block;
+  float:left;
+  position:relative;
+}
+.l-left-ribbon{
+  @extend %l-ribbon;
+  width:21rem;
+  position:fixed;
+  top:$gutter;
+  left:$gutter;
+  //background:#0000FF;
+}
+.l-mid-ribbon{
+  @extend %l-ribbon;
+  width:calc(100% - 21rem);
+  margin-left:21rem;
+  div.slide-spacer{
+    height:50vh;
+    //background:#FF00FF;
+    margin-top:$gutter;
+  }
+  div.slide{
+    //background:#00FF00;
+    display:block;
+    width:100%;
+    height:calc(100vh - 4.8rem);
+    text-align:center;
+    img{
+      height:80%;
+      width:auto;
+      @include vertical-align-element();
+    }
+  }
+}
+.l-right-ribbon{
+  @extend %l-ribbon;
+  width:2rem;
+  right:$gutter;
+  top:$gutter;
+  position:fixed;
+  //background:#FF0000;
+}
+
+
